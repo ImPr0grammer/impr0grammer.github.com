@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Pr0grammer</title>
+    <description>Tips and Tricks for Software Engineers and Data Scientists. Python, Scala, Tensorflow, Deep Learning, etc.
+</description>
+    <link>http://localhost:4000/</link>
+    <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Mon, 18 Jun 2018 14:30:13 +0300</pubDate>
+    <lastBuildDate>Mon, 18 Jun 2018 14:30:13 +0300</lastBuildDate>
+    <generator>Jekyll v3.8.3</generator>
+    
+      <item>
+        <title>Welcome!</title>
+        <description>&lt;p&gt;Hi all, this is my personal blog. 
+You’ll find a lot of usefull information in my blog about Programming and Data Science.
+Some tips for better language usage, tips how to pass code interview, overview of state-of-the-art approaches in ML and other usefull information
+&lt;!--more--&gt;&lt;/p&gt;
+
+&lt;p&gt;Stay tuned, check out blog for new usefull advices &lt;a href=&quot;https://impr0grammer.github.io&quot;&gt;block main page&lt;/a&gt;.&lt;/p&gt;
+
+</description>
+        <pubDate>Sun, 17 Jun 2018 14:16:19 +0300</pubDate>
+        <link>http://localhost:4000/2018/06/17/welcome-to-jekyll.html</link>
+        <guid isPermaLink="true">http://localhost:4000/2018/06/17/welcome-to-jekyll.html</guid>
+        
+        <category>blog</category>
+        
+        <category>programming</category>
+        
+        
+      </item>
+    
+  </channel>
+</rss>

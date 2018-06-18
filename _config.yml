@@ -1,0 +1,22 @@
+# Welcome to Jekyll!
+#
+# This config file is meant for settings that affect your whole blog, values
+# which you are expected to set up once and rarely need to edit after that.
+# For technical reasons, this file is *NOT* reloaded automatically when you use
+# 'jekyll serve'. If you change this file, please restart the server process.
+
+# Site settings
+title: Pr0grammer
+email: alekseev.aleksei@gmail.com
+excerpt_separator: <!--more-->
+description: > # this means to ignore newlines until "baseurl:"
+  Tips and Tricks for Software Engineers and Data Scientists.
+  Python, Scala, Tensorflow, Deep Learning, etc.
+baseurl: "" # the subpath of your site, e.g. /blog
+url: "https://impr0grammer.github.io" # the base hostname & protocol for your site
+twitter_username: impr0grammer
+github_username:  impr0grammer
+
+# Build settings
+markdown: kramdown
+theme: jekyll-theme-awesome
