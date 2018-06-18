@@ -68,6 +68,42 @@
   <ul class="post-list">
     
       <li>
+        <span class="post-meta">Jun 18, 2018</span>
+
+        <h2>
+          <a class="post-link" href="/2018/06/18/nametuples.html">Named tuples in Python</a>
+        </h2>
+        <div>
+          <p>Today I want to talk about tuples. 
+Out code with tuples usually looks like this:</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">calculate_invoice</span><span class="p">():</span>
+    <span class="n">days</span> <span class="o">=</span> <span class="mi">14</span>
+    <span class="n">cost</span> <span class="o">=</span> <span class="mi">14</span> <span class="o">*</span> <span class="mi">30</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">days</span><span class="p">,</span> <span class="n">cost</span><span class="p">,</span> <span class="s">"Additional Information"</span><span class="p">)</span>
+
+<span class="n">days</span><span class="p">,</span> <span class="n">cost</span><span class="p">,</span> <span class="n">info</span> <span class="o">=</span> <span class="n">calc</span><span class="p">()</span></code></pre></figure>
+
+<p>Tuples are very convenient, epecially in scripts and small prototypes.
+But even here it’s hard to understand what’s going on in the code.
+And it’s much harder to read large code with tuples.</p>
+
+<p>What should we use instead, Classes?</p>
+
+
+        </div>
+        <div>
+          
+            <span>python</span> 
+          
+            <span>programming</span> 
+          
+            <span>python-tips</span> 
+          
+        </div>
+      </li>
+    
+      <li>
         <span class="post-meta">Jun 17, 2018</span>
 
         <h2>
