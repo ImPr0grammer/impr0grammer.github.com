@@ -10,7 +10,7 @@ You'll find a lot of usefull information in my blog about Programming and Data S
 Some tips for better language usage, tips how to pass code interview, overview of state-of-the-art approaches in ML and other usefull information
 <!--more-->
 
-Stay tuned, check out [my blog][blog-main] for new usefull advices.
+Stay tuned, check out [my blog][blog-main] for useful tips and tricks.
 
 [blog-main]: https://impr0grammer.github.io
 [github-repo]: https://github.com/impr0grammer

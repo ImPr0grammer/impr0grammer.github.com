@@ -6,7 +6,7 @@ tags: [ python, programming, "python-tips" ]
 ---
 
 Today I want to talk about tuples. 
-Out code with tuples usually looks like this:
+Code with tuples usually looks like this:
 {% highlight python %}
 def calculate_invoice():
     days = 14
@@ -16,16 +16,15 @@ def calculate_invoice():
 days, cost, info = calc()
 {% endhighlight %}
 
-Tuples are very convenient, epecially in scripts and small prototypes.
-But even here it's hard to understand what's going on in the code.
-And it's much harder to read large code with tuples.
+Tuples are very convenient, epecially in scripts and prototypes.
+But it's hard to read large code with tuples.
 
 What should we use instead, Classes?
 <!--more-->
 
 There is an elegant solution in Python - <b>namedtuple</b> <a href="https://docs.python.org/3/library/collections.html#collections.namedtuple"> see python 3 docs</a>.
-Namedtuple - is tuple with specified name. Every field name is also specified.
-So it's similar to original tuples but it makes code much more clear.
+Namedtuple - is a tuple with specified name. Every tuple field also has name.
+So it's similar to original tuples but also it's similar to classes. And it makes code much more clear.
 
 Let's rewrite orinial code to see how it works.
 {% highlight python %}
@@ -51,7 +50,7 @@ Fiew more things to now:
 
 Try namedtuple in the next project if it fits you.
 
-Stay tuned, check out [my blog][blog-main] for more usefull tips and tricks.
+Stay tuned, check out [my blog][blog-main] for more useful tips and tricks.
 
 [blog-main]: https://impr0grammer.github.io
 [github-repo]: https://github.com/impr0grammer
