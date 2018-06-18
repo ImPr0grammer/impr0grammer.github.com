@@ -19,4 +19,4 @@ github_username:  impr0grammer
 
 # Build settings
 markdown: kramdown
-theme: jekyll-theme-awesome
+theme: jekyll-theme-cayman

@@ -2,11 +2,11 @@
 <urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>
     <url>
         <loc>http://localhost:4000/2018/06/17/welcome-to-jekyll.html</loc>
-        <lastmod>2018-06-18T14:31:42+03:00</lastmod>
+        <lastmod>2018-06-18T16:40:02+03:00</lastmod>
     </url>
     <url>
         <loc>http://localhost:4000/</loc>
-        <lastmod>2018-06-18T14:31:42+03:00</lastmod>
+        <lastmod>2018-06-18T16:40:02+03:00</lastmod>
     </url>
     <url>
         <loc>http://localhost:4000/css/main.css</loc>
