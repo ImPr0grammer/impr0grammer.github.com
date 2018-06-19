@@ -63,9 +63,35 @@
       <div class="wrapper">
         <div class="home">
 
-  <h1 class="page-heading">Posts</h1>
-
   <ul class="post-list">
+    
+      <li>
+        <span class="post-meta">Jun 18, 2018</span>
+
+        <h2>
+          <a class="post-link" href="/2018/06/18/java_sort.html">Sorting in Java</a>
+        </h2>
+        <div>
+          <p>You probably know that in order to sort array in <b>Java</b> you should use <b>Arrays.sort</b>.
+But do you know what algoritms are used inside?</p>
+
+<p>If we open implementaion we’ll see that for primitive arrays <a href="http://codeblab.com/wp-content/uploads/2009/09/DualPivotQuicksort.pdf">Dual Pivot QSort</a> is used.
+While <a href="https://en.wikipedia.org/wiki/Merge_sort"> Merge Sort </a> is used for Objects.</p>
+
+<p>Let’s do some experiments and sort primitive array <b>int[]</b> and and array of objects <b>Integer[]</b>. Also let’s sort <b>ArrayList&lt;Integer&gt;</b> using <b>Collections.sort</b>.</p>
+
+
+        </div>
+        <div>
+          
+            <span>java</span> 
+          
+            <span>programming</span> 
+          
+            <span>java-tips</span> 
+          
+        </div>
+      </li>
     
       <li>
         <span class="post-meta">Jun 18, 2018</span>
@@ -75,7 +101,7 @@
         </h2>
         <div>
           <p>Today I want to talk about tuples. 
-Out code with tuples usually looks like this:</p>
+Code with tuples usually looks like this:</p>
 
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">calculate_invoice</span><span class="p">():</span>
     <span class="n">days</span> <span class="o">=</span> <span class="mi">14</span>
@@ -84,9 +110,8 @@ Out code with tuples usually looks like this:</p>
 
 <span class="n">days</span><span class="p">,</span> <span class="n">cost</span><span class="p">,</span> <span class="n">info</span> <span class="o">=</span> <span class="n">calc</span><span class="p">()</span></code></pre></figure>
 
-<p>Tuples are very convenient, epecially in scripts and small prototypes.
-But even here it’s hard to understand what’s going on in the code.
-And it’s much harder to read large code with tuples.</p>
+<p>Tuples are very convenient, epecially in scripts and prototypes.
+But it’s hard to read large code with tuples.</p>
 
 <p>What should we use instead, Classes?</p>
 

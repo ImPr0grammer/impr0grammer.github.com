@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <title>Named tuples in Python</title>
-  <meta name="description" content="Today I want to talk about tuples. Out code with tuples usually looks like this:def calculate_invoice():    days = 14    cost = 14 * 30    return (days, cost...">
+  <meta name="description" content="Today I want to talk about tuples. Code with tuples usually looks like this:def calculate_invoice():    days = 14    cost = 14 * 30    return (days, cost, "A...">
 
   <link rel="stylesheet" href="/css/main.css">
   <link rel="canonical" href="http://localhost:4000/2018/06/18/nametuples.html">
@@ -69,7 +69,7 @@
 
   <div class="post-content" itemprop="articleBody">
     <p>Today I want to talk about tuples. 
-Out code with tuples usually looks like this:</p>
+Code with tuples usually looks like this:</p>
 
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">calculate_invoice</span><span class="p">():</span>
     <span class="n">days</span> <span class="o">=</span> <span class="mi">14</span>
@@ -78,16 +78,15 @@ Out code with tuples usually looks like this:</p>
 
 <span class="n">days</span><span class="p">,</span> <span class="n">cost</span><span class="p">,</span> <span class="n">info</span> <span class="o">=</span> <span class="n">calc</span><span class="p">()</span></code></pre></figure>
 
-<p>Tuples are very convenient, epecially in scripts and small prototypes.
-But even here it’s hard to understand what’s going on in the code.
-And it’s much harder to read large code with tuples.</p>
+<p>Tuples are very convenient, epecially in scripts and prototypes.
+But it’s hard to read large code with tuples.</p>
 
 <p>What should we use instead, Classes?
 <!--more--></p>
 
 <p>There is an elegant solution in Python - <b>namedtuple</b> <a href="https://docs.python.org/3/library/collections.html#collections.namedtuple"> see python 3 docs</a>.
-Namedtuple - is tuple with specified name. Every field name is also specified.
-So it’s similar to original tuples but it makes code much more clear.</p>
+Namedtuple - is a tuple with specified name. Every tuple field also has name.
+So it’s similar to original tuples but also it’s similar to classes. And it makes code much more clear.</p>
 
 <p>Let’s rewrite orinial code to see how it works.</p>
 
@@ -114,7 +113,7 @@ So it’s similar to original tuples but it makes code much more clear.</p>
 
 <p>Try namedtuple in the next project if it fits you.</p>
 
-<p>Stay tuned, check out <a href="https://impr0grammer.github.io">my blog</a> for more usefull tips and tricks.</p>
+<p>Stay tuned, check out <a href="https://impr0grammer.github.io">my blog</a> for more useful tips and tricks.</p>
 
 
   </div>
