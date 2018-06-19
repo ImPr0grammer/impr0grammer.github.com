@@ -6,8 +6,8 @@
 </description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Wed, 20 Jun 2018 00:58:07 +0300</pubDate>
-    <lastBuildDate>Wed, 20 Jun 2018 00:58:07 +0300</lastBuildDate>
+    <pubDate>Wed, 20 Jun 2018 01:07:25 +0300</pubDate>
+    <lastBuildDate>Wed, 20 Jun 2018 01:07:25 +0300</lastBuildDate>
     <generator>Jekyll v3.8.3</generator>
     
       <item>
@@ -16,7 +16,7 @@
 But do you know what algoritms are used inside?&lt;/p&gt;
 
 &lt;p&gt;If we open implementaion we’ll see that for primitive arrays &lt;a href=&quot;http://codeblab.com/wp-content/uploads/2009/09/DualPivotQuicksort.pdf&quot;&gt;Dual Pivot QSort&lt;/a&gt; is used.
-While &lt;a href=&quot;https://en.wikipedia.org/wiki/Merge_sort&quot;&gt; Merge Sort &lt;/a&gt; is used for Objects.&lt;/p&gt;
+While &lt;a href=&quot;https://en.wikipedia.org/wiki/Timesort&quot;&gt; Time Sort &lt;/a&gt; is used for Objects wich is an upgraded version of Merge Sort.&lt;/p&gt;
 
 &lt;p&gt;Let’s do some experiments and sort primitive array &lt;b&gt;int[]&lt;/b&gt; and and array of objects &lt;b&gt;Integer[]&lt;/b&gt;. Also let’s sort &lt;b&gt;ArrayList&amp;lt;Integer&amp;gt;&lt;/b&gt; using &lt;b&gt;Collections.sort&lt;/b&gt;.&lt;/p&gt;
 
@@ -56,14 +56,14 @@ int[] is sorted for 0.245 seconds&lt;/p&gt;
 
 &lt;p&gt;Integer[] is sorted for 0.813 seconds&lt;/p&gt;
 
-&lt;p&gt;ArrayList&lt;Integer&gt; is sorted for 0.412 seconds&lt;/Integer&gt;&lt;/p&gt;
+&lt;p&gt;ArrayList&lt;Integer&gt; is sorted for 0.712 seconds&lt;/Integer&gt;&lt;/p&gt;
 
 &lt;p&gt;So what can we say:&lt;/p&gt;
 &lt;ul&gt;
-  &lt;li&gt;&lt;b&gt;int[]&lt;/b&gt; is sorted almost 4x faster than &lt;b&gt;integer[]&lt;/b&gt;. &lt;b&gt;QSort&lt;/b&gt; is faster than &lt;b&gt;MergeSort&lt;/b&gt; especially without any camparator usage code&lt;/li&gt;
+  &lt;li&gt;&lt;b&gt;int[]&lt;/b&gt; is sorted almost 4x faster than &lt;b&gt;integer[]&lt;/b&gt;. &lt;b&gt;QSort&lt;/b&gt; is faster than &lt;b&gt;TimeSort&lt;/b&gt; especially without any camparator usage code&lt;/li&gt;
   &lt;li&gt;&lt;b&gt;Arrays.sort(int[])&lt;/b&gt; can work &lt;b&gt;O(n^2)&lt;/b&gt;, that’s very slow in special similar to &lt;a href=&quot;http://www.cs.dartmouth.edu/~doug/mdmspe.pdf&quot;&gt; antiqsort &lt;/a&gt; test&lt;/li&gt;
-  &lt;li&gt;&lt;b&gt;Collections.sort&lt;/b&gt; is also uses Qsort with some arrays copying&lt;/li&gt;
-  &lt;li&gt;Arrays.sort(object[]) is stable. It means it doesn’t swap equal elements. It could be useful in real practice if you are sorting by priorities or something like that.&lt;/li&gt;
+  &lt;li&gt;&lt;b&gt;Collections.sort&lt;/b&gt; is also uses TimeSort with some arrays copying&lt;/li&gt;
+  &lt;li&gt;&lt;b&gt;Arrays.sort(object[])&lt;/b&gt; is stable because TimeSort is stable. It means it doesn’t swap equal elements. It could be useful in real practice if you are sorting by priorities or something like that.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;So my advice is the following:&lt;/p&gt;
