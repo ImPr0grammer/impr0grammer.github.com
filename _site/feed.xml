@@ -6,17 +6,184 @@
 </description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Wed, 20 Jun 2018 01:07:25 +0300</pubDate>
-    <lastBuildDate>Wed, 20 Jun 2018 01:07:25 +0300</lastBuildDate>
+    <pubDate>Wed, 20 Jun 2018 13:56:24 +0300</pubDate>
+    <lastBuildDate>Wed, 20 Jun 2018 13:56:24 +0300</lastBuildDate>
     <generator>Jekyll v3.8.3</generator>
+    
+      <item>
+        <title>Priority Queues and Heaps in Python</title>
+        <description>&lt;p&gt;Let’s imagine that you want to solve the following problem:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;You have tasks to process which are pushing to some queue&lt;/li&gt;
+  &lt;li&gt;Every task has priority and and some information for processing&lt;/li&gt;
+  &lt;li&gt;Every task should be processed according to it’s priority&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/priority_queue.png&quot; alt=&quot;Priority Queue&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Data structure that can handle such tasks with priorities is called Priority Queue.
+How can we impelemnt it? We can place tasks to array but processing N tasks could take &lt;b&gt;O(N^2)&lt;/b&gt; time which isn’t a good idea for a real application.&lt;/p&gt;
+
+&lt;p&gt;Fortunatelly there is a very well known &lt;b&gt;O(N log N)&lt;/b&gt; solution for this problem.
+Let’s have a look how to do it in Python.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;Priority Queue - is a data structure that has the following operation:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Add Task&lt;/li&gt;
+  &lt;li&gt;Extract the most priority task to process&lt;/li&gt;
+  &lt;li&gt;Change priority for the task&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Usually Priority Queues are implemented using &lt;a href=&quot;https://en.wikipedia.org/wiki/Heap_(data_structure)&quot;&gt;heap data structure&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Python has PriorityQueue out of the box, &lt;a href=&quot;https://docs.python.org/3/library/queue.html#queue.PriorityQueue&quot;&gt;see docs &lt;/a&gt;.
+It works good the only problem is that it doesn’t allow to change priority of the task.
+Let’s create simple PriorityQueue that allows to change priority of the task.
+We will use standard Python &lt;a href=&quot;https://docs.python.org/3.6/library/heapq.html&quot;&gt;heapq&lt;/a&gt; implementaion of heap.&lt;/p&gt;
+
+&lt;p&gt;Let’s have a look it this implementation:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;It works in a C way. You have to define an array and pass it to all methods.&lt;/li&gt;
+  &lt;li&gt;It has method &lt;b&gt;heappush(heap, task)&lt;/b&gt; to add task&lt;/li&gt;
+  &lt;li&gt;It has method &lt;b&gt;heappop(heap)&lt;/b&gt; to extract task with the lowest priority&lt;/li&gt;
+  &lt;li&gt;It has method &lt;b&gt;heapify(arr)&lt;/b&gt; to transform array to correct heap data structure in place&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Now, let’s create PriorityQueue.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;heapq&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;PriorityQueue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+    
+    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;__init__&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+        &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;heap&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[]&lt;/span&gt;
+        &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;task2heapitem&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{}&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;# task -&amp;gt; heap item&lt;/span&gt;
+        
+    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;push&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;task&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;priority&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;heap_entry&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;priority&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;task&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;False&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;assert&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;task&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;not&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;task2heapitem&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;There is already task {} in priority queue&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;format&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;task&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        
+        &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;task2heapitem&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;task&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;heap_entry&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;heappush&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;heap&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;heap_entry&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        
+        
+    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;pop&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;while&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;heap&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;priority&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;task&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;is_deleted&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;heappop&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;heap&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+            
+            &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;not&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;is_deleted&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+                &lt;span class=&quot;k&quot;&gt;del&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;task2heapitem&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;task&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+                &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;task&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;priority&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        
+        &lt;span class=&quot;k&quot;&gt;raise&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;KeyError&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'Pop from an empty priority queue'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        
+    
+    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;update_priority&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;task&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;priority&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;assert&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;task&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;task2heapitem&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;There is no task {} in heap&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;format&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;task&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        
+        &lt;span class=&quot;n&quot;&gt;last_item&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;task2heapitem&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;task&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;last_item&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;del&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;task2heapitem&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;task&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+        
+        &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;push&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;task&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;priority&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;And then let’s test it and compare our implementation with standard Python PriorityQueue&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Let’s create test data&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;sys&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;random&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;tasks&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[]&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1000000&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;priority&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;random&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;uniform&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sys&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;maxsize&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;tasks&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;append&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;priority&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;to_check&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;sorted&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tasks&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;key&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;lambda&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;item&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;item&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Test our implementation&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;time&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;queue&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;PriorityQueue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;start_time&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;time&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;time&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# First add all items&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;priority&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;task&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tasks&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;queue&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;push&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;task&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;priority&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;# Extract all items in correct order&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;task&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;priority&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;queue&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pop&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+    &lt;span class=&quot;c&quot;&gt;# Let's check that tasks returned with respect to priorities&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;assert&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;task&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;to_check&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+    
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Time: {}&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;format&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;time&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;time&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;start_time&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Time: 10.167301654815674&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Let’s run standard PrioriyQueue&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;queue&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;time&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;start_time&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;time&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;time&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;queue&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;queue&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;PriorityQueue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;priority&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tasks&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;queue&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;put&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;priority&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;task&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;queue&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;   
+    &lt;span class=&quot;k&quot;&gt;assert&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;task&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;to_check&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Time: {}&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;format&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;time&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;time&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;start_time&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Time: 10.465237379074097&lt;/p&gt;
+
+&lt;p&gt;We have got the same result because standard &lt;b&gt;PriorityQueue&lt;/b&gt; is also based on &lt;b&gt;heapq&lt;/b&gt;.&lt;/p&gt;
+
+&lt;p&gt;One thing, we don’t really update priority of the task. We mark it as deleted and add one more task to the queue. This could lead to larger heap. If we want to really update task priorities we need to implement our own heap data structure.&lt;/p&gt;
+
+&lt;p&gt;Recap:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Use &lt;b&gt;queue.PriorityQueue&lt;/b&gt; if you want to process tasks according to it’s priority;&lt;/li&gt;
+  &lt;li&gt;Use my implementation of PriorityQueue or something similar if you need to modify priorities of tasks or you need more control on queue;&lt;/li&gt;
+  &lt;li&gt;Implement your own heap if you want to have perfect effeciency in priority updates.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Stay tuned, check out &lt;a href=&quot;https://impr0grammer.github.io&quot;&gt;my blog&lt;/a&gt; for more useful tips and tricks.&lt;/p&gt;
+
+</description>
+        <pubDate>Wed, 20 Jun 2018 13:56:19 +0300</pubDate>
+        <link>http://localhost:4000/2018/06/20/python_heap.html</link>
+        <guid isPermaLink="true">http://localhost:4000/2018/06/20/python_heap.html</guid>
+        
+        <category>python</category>
+        
+        <category>programming</category>
+        
+        <category>python-tips</category>
+        
+        
+      </item>
     
       <item>
         <title>Sorting in Java</title>
         <description>&lt;p&gt;You probably know that in order to sort array in &lt;b&gt;Java&lt;/b&gt; you should use &lt;b&gt;Arrays.sort&lt;/b&gt;.
 But do you know what algoritms are used inside?&lt;/p&gt;
 
-&lt;p&gt;If we open implementaion we’ll see that for primitive arrays &lt;a href=&quot;http://codeblab.com/wp-content/uploads/2009/09/DualPivotQuicksort.pdf&quot;&gt;Dual Pivot QSort&lt;/a&gt; is used.
-While &lt;a href=&quot;https://en.wikipedia.org/wiki/Timesort&quot;&gt; Time Sort &lt;/a&gt; is used for Objects wich is an upgraded version of Merge Sort.&lt;/p&gt;
+&lt;p&gt;If we open implementaion we’ll see that for primitive arrays &lt;a href=&quot;http://codeblab.com/wp-content/uploads/2009/09/DualPivotQuicksort.pdf&quot;&gt;Dual Pivot QSort&lt;/a&gt; is used. That’s a modified &lt;b&gt;QSort&lt;/b&gt; that splits array into three peaces instead of two in &lt;b&gt;QSort&lt;/b&gt;.
+While &lt;a href=&quot;https://en.wikipedia.org/wiki/Timesort&quot;&gt; Time Sort &lt;/a&gt; is used for Objects which is an upgraded version of Merge Sort.&lt;/p&gt;
 
 &lt;p&gt;Let’s do some experiments and sort primitive array &lt;b&gt;int[]&lt;/b&gt; and and array of objects &lt;b&gt;Integer[]&lt;/b&gt;. Also let’s sort &lt;b&gt;ArrayList&amp;lt;Integer&amp;gt;&lt;/b&gt; using &lt;b&gt;Collections.sort&lt;/b&gt;.&lt;/p&gt;
 
@@ -60,25 +227,25 @@ int[] is sorted for 0.245 seconds&lt;/p&gt;
 
 &lt;p&gt;So what can we say:&lt;/p&gt;
 &lt;ul&gt;
-  &lt;li&gt;&lt;b&gt;int[]&lt;/b&gt; is sorted almost 4x faster than &lt;b&gt;integer[]&lt;/b&gt;. &lt;b&gt;QSort&lt;/b&gt; is faster than &lt;b&gt;TimeSort&lt;/b&gt; especially without any camparator usage code&lt;/li&gt;
-  &lt;li&gt;&lt;b&gt;Arrays.sort(int[])&lt;/b&gt; can work &lt;b&gt;O(n^2)&lt;/b&gt;, that’s very slow in special similar to &lt;a href=&quot;http://www.cs.dartmouth.edu/~doug/mdmspe.pdf&quot;&gt; antiqsort &lt;/a&gt; test&lt;/li&gt;
-  &lt;li&gt;&lt;b&gt;Collections.sort&lt;/b&gt; is also uses TimeSort with some arrays copying&lt;/li&gt;
-  &lt;li&gt;&lt;b&gt;Arrays.sort(object[])&lt;/b&gt; is stable because TimeSort is stable. It means it doesn’t swap equal elements. It could be useful in real practice if you are sorting by priorities or something like that.&lt;/li&gt;
+  &lt;li&gt;&lt;b&gt;int[]&lt;/b&gt; is sorted almost &lt;b&gt;4x&lt;/b&gt; faster than &lt;b&gt;integer[]&lt;/b&gt;. &lt;b&gt;QSort&lt;/b&gt; is faster than &lt;b&gt;TimeSort&lt;/b&gt; especially without any comparator-specific code&lt;/li&gt;
+  &lt;li&gt;&lt;b&gt;Arrays.sort(int[])&lt;/b&gt; has worst case &lt;b&gt;O(n^2)&lt;/b&gt;, that’s very slow, but in specific test case similar to &lt;a href=&quot;http://www.cs.dartmouth.edu/~doug/mdmspe.pdf&quot;&gt; antiqsort &lt;/a&gt;.&lt;/li&gt;
+  &lt;li&gt;&lt;b&gt;Collections.sort&lt;/b&gt; is also uses &lt;b&gt;Time Sort &lt;/b&gt;b&amp;gt; with some arrays copying&lt;/li&gt;
+  &lt;li&gt;&lt;b&gt;Arrays.sort(object[])&lt;/b&gt; is stable because &lt;b&gt;Time Sort &lt;/b&gt; is stable. It means it doesn’t swap equal elements. It could be useful in real practice if you are sorting by priorities or something like that.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;So my advice is the following:&lt;/p&gt;
 &lt;ul&gt;
   &lt;li&gt;Use &lt;b&gt;Arrays.sort(int[])&lt;/b&gt; as default solution except two following cases&lt;/li&gt;
-  &lt;li&gt;If you must garantee that your code works &lt;b&gt;O(n log n)&lt;/b&gt; use &lt;b&gt;Arrays.sort(Integer[]) &lt;/b&gt;&lt;/li&gt;
-  &lt;li&gt;If you are participating in programming contest (like &lt;a href=&quot;http://codeforces.com&quot;&gt;codeforces.com&lt;/a&gt;) use &lt;b&gt;Arrays.sort(Integer[])&lt;/b&gt; because it’s often when qsort solution failes there.&lt;/li&gt;
+  &lt;li&gt;If you must guarantee that your code works &lt;b&gt;O(n log n)&lt;/b&gt; use &lt;b&gt;Arrays.sort(Integer[]) &lt;/b&gt;&lt;/li&gt;
+  &lt;li&gt;If you are participating in programming contests (like &lt;a href=&quot;http://codeforces.com&quot;&gt;codeforces.com&lt;/a&gt;) use &lt;b&gt;Arrays.sort(Integer[])&lt;/b&gt; because it often has antiqsort tests.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;Stay tuned, check out &lt;a href=&quot;https://impr0grammer.github.io&quot;&gt;my blog&lt;/a&gt; for more useful tips and tricks.&lt;/p&gt;
 
 </description>
-        <pubDate>Mon, 18 Jun 2018 17:23:19 +0300</pubDate>
-        <link>http://localhost:4000/2018/06/18/java_sort.html</link>
-        <guid isPermaLink="true">http://localhost:4000/2018/06/18/java_sort.html</guid>
+        <pubDate>Tue, 19 Jun 2018 23:23:19 +0300</pubDate>
+        <link>http://localhost:4000/2018/06/19/java_sort.html</link>
+        <guid isPermaLink="true">http://localhost:4000/2018/06/19/java_sort.html</guid>
         
         <category>java</category>
         

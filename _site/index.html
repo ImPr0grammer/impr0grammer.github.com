@@ -66,17 +66,52 @@
   <ul class="post-list">
     
       <li>
-        <span class="post-meta">Jun 18, 2018</span>
+        <span class="post-meta">Jun 20, 2018</span>
 
         <h2>
-          <a class="post-link" href="/2018/06/18/java_sort.html">Sorting in Java</a>
+          <a class="post-link" href="/2018/06/20/python_heap.html">Priority Queues and Heaps in Python</a>
+        </h2>
+        <div>
+          <p>Let’s imagine that you want to solve the following problem:</p>
+<ul>
+  <li>You have tasks to process which are pushing to some queue</li>
+  <li>Every task has priority and and some information for processing</li>
+  <li>Every task should be processed according to it’s priority</li>
+</ul>
+
+<p><img src="http://localhost:4000/assets/priority_queue.png" alt="Priority Queue" /></p>
+
+<p>Data structure that can handle such tasks with priorities is called Priority Queue.
+How can we impelemnt it? We can place tasks to array but processing N tasks could take <b>O(N^2)</b> time which isn’t a good idea for a real application.</p>
+
+<p>Fortunatelly there is a very well known <b>O(N log N)</b> solution for this problem.
+Let’s have a look how to do it in Python.</p>
+
+
+        </div>
+        <div>
+          
+            <span>python</span> 
+          
+            <span>programming</span> 
+          
+            <span>python-tips</span> 
+          
+        </div>
+      </li>
+    
+      <li>
+        <span class="post-meta">Jun 19, 2018</span>
+
+        <h2>
+          <a class="post-link" href="/2018/06/19/java_sort.html">Sorting in Java</a>
         </h2>
         <div>
           <p>You probably know that in order to sort array in <b>Java</b> you should use <b>Arrays.sort</b>.
 But do you know what algoritms are used inside?</p>
 
-<p>If we open implementaion we’ll see that for primitive arrays <a href="http://codeblab.com/wp-content/uploads/2009/09/DualPivotQuicksort.pdf">Dual Pivot QSort</a> is used.
-While <a href="https://en.wikipedia.org/wiki/Timesort"> Time Sort </a> is used for Objects wich is an upgraded version of Merge Sort.</p>
+<p>If we open implementaion we’ll see that for primitive arrays <a href="http://codeblab.com/wp-content/uploads/2009/09/DualPivotQuicksort.pdf">Dual Pivot QSort</a> is used. That’s a modified <b>QSort</b> that splits array into three peaces instead of two in <b>QSort</b>.
+While <a href="https://en.wikipedia.org/wiki/Timesort"> Time Sort </a> is used for Objects which is an upgraded version of Merge Sort.</p>
 
 <p>Let’s do some experiments and sort primitive array <b>int[]</b> and and array of objects <b>Integer[]</b>. Also let’s sort <b>ArrayList&lt;Integer&gt;</b> using <b>Collections.sort</b>.</p>
 

@@ -1,0 +1,72 @@
+---
+layout: post
+title:  "Sorting in Java"
+date:   2018-06-19 23:23:19 +0300
+tags: [ java, programming, "java-tips" ]
+---
+
+You probably know that in order to sort array in <b>Java</b> you should use <b>Arrays.sort</b>.
+But do you know what algoritms are used inside?
+
+If we open implementaion we'll see that for primitive arrays <a href="http://codeblab.com/wp-content/uploads/2009/09/DualPivotQuicksort.pdf">Dual Pivot QSort</a> is used. That's a modified <b>QSort</b> that splits array into three peaces instead of two in <b>QSort</b>.
+While <a href="https://en.wikipedia.org/wiki/Timesort"> Time Sort </a> is used for Objects which is an upgraded version of Merge Sort.
+
+Let's do some experiments and sort primitive array <b>int[]</b> and and array of objects <b>Integer[]</b>. Also let's sort <b>ArrayList&lt;Integer&gt;</b> using <b>Collections.sort</b>.
+
+<!--more-->
+
+{% highlight java %} 
+    int n = 1000000;
+    int[] ints = new int[n];
+    Integer[] integers = new Integer[n];
+    ArrayList<Integer> list = new ArrayList<>(n);
+
+    for (int i = 0; i < n; ++i) {
+        int val = (int)Math.round(Math.random() * Integer.MAX_VALUE);
+        ints[i] = val;
+        integers[i] = val;
+        list.add(val);
+    }
+
+    long startTime = System.currentTimeMillis();
+    Arrays.sort(ints);
+    float estimatedTime = (System.currentTimeMillis() - startTime) / 1000f;
+    System.out.printf("int[] is sorted for %.3f seconds\n\n", estimatedTime);
+
+    startTime = System.currentTimeMillis();
+    Arrays.sort(integers);
+    estimatedTime = (System.currentTimeMillis() - startTime) / 1000f;
+    System.out.printf("Integer[] is sorted for %.3f seconds\n\n", estimatedTime);
+
+    startTime = System.currentTimeMillis();
+    Collections.sort(list);
+    estimatedTime = (System.currentTimeMillis() - startTime) / 1000f;
+    System.out.printf("ArrayList<Integer> is sorted for %.3f seconds\n\n", estimatedTime);
+	
+{% endhighlight %}
+
+The result is the following:
+int[] is sorted for 0.245 seconds
+
+Integer[] is sorted for 0.813 seconds
+
+ArrayList<Integer> is sorted for 0.712 seconds
+
+
+So what can we say:
+* <b>int[]</b> is sorted almost <b>4x</b> faster than <b>integer[]</b>. <b>QSort</b> is faster than <b>TimeSort</b> especially without any comparator-specific code
+* <b>Arrays.sort(int[])</b> has worst case <b>O(n^2)</b>, that's very slow, but in specific test case similar to <a href="http://www.cs.dartmouth.edu/~doug/mdmspe.pdf"> antiqsort </a>.
+* <b>Collections.sort</b> is also uses <b>Time Sort </b>b> with some arrays copying
+* <b>Arrays.sort(object[])</b> is stable because <b>Time Sort </b> is stable. It means it doesn't swap equal elements. It could be useful in real practice if you are sorting by priorities or something like that.
+
+
+So my advice is the following:
+* Use <b>Arrays.sort(int[])</b> as default solution except two following cases
+* If you must guarantee that your code works <b>O(n log n)</b> use <b>Arrays.sort(Integer[]) </b>
+* If you are participating in programming contests (like <a href="http://codeforces.com">codeforces.com</a>) use <b>Arrays.sort(Integer[])</b> because it often has antiqsort tests.
+
+
+Stay tuned, check out [my blog][blog-main] for more useful tips and tricks.
+
+[blog-main]: https://impr0grammer.github.io
+[github-repo]: https://github.com/impr0grammer
