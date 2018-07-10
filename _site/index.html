@@ -66,6 +66,40 @@
   <ul class="post-list">
     
       <li>
+        <span class="post-meta">Jul 10, 2018</span>
+
+        <h2>
+          <a class="post-link" href="/2018/07/10/complex-keys-in-python.html">Complex keys in dictionaries in Python</a>
+        </h2>
+        <div>
+          <p>Let’s imagine you want to store list or dictionary as a key in python dict.
+And you are going to write the code like this:</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">dict_key</span> <span class="o">=</span> <span class="p">{</span><span class="s">'a'</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s">'b'</span><span class="p">:</span> <span class="mi">2</span><span class="p">}</span>
+<span class="n">stat</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="n">stat</span><span class="p">[</span><span class="n">dict_key</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span></code></pre></figure>
+
+<p>It’s a bad code because your are trying to use mutable object as a key in dictionary.
+And Python will check it and this code will throw an error:</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="nb">TypeError</span><span class="p">:</span> <span class="n">unhashable</span> <span class="nb">type</span><span class="p">:</span> <span class="s">'dict'</span></code></pre></figure>
+
+<p>Let’s consider how to use complex objects and data structures as dict keys in Python.</p>
+
+
+        </div>
+        <div>
+          
+            <span>python</span> 
+          
+            <span>programming</span> 
+          
+            <span>python-tips</span> 
+          
+        </div>
+      </li>
+    
+      <li>
         <span class="post-meta">Jun 20, 2018</span>
 
         <h2>
